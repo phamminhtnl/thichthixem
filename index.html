@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>GoTV - Watch Trending Dramas Here</title>
+    <meta name="keyword" content="GoTV" />
+    <meta name="description" content="GoTV - Watch Trending Dramas Here" />
+    <link
+      rel="icon"
+      href="https://s.gohitv.com/origin/cd5dbecc0a4541dab2053d5518d1ac8d1663662754415.png"
+      type="image/x-icon"
+    />
+    <script type="text/javascript" src="./static/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/qrcode.min.js"></script>
+    <style>
+      html{
+        height: 100%;
+      }
+      body{
+        box-sizing: content-box;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-family: "Microsoft YaHei", 微软雅黑, Arial, STHeiti, sans-serif;
+      }
+      .content{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .header{
+        height: 84px;
+        width: 1000px;
+        padding: 0 100px 0 100px;
+        margin:0 auto;
+        display: flex;
+        justify-content: space-between;
+      }
+      .logo{
+        height: 52px;
+        width: 437px;
+        margin-top: 20px;
+      }
+      .header-border{
+        min-height: 1px;
+        min-width: 1200px;
+        background-color: #000000;
+        opacity: 0.1;
+      }
+      .main-content{
+        width: 1000px;
+        min-height: 520px;
+        display: flex;
+        padding: 0 100px 0 100px;
+        margin: 0 auto;
+      }
+      .image{
+        width: 440px;
+        height: 556px;
+        margin-top: 40px;
+        z-index: 1;
+      }
+      .download{
+        margin: 69px 0 0 90px;
+      }
+      .download-logo{
+        width: 404px;
+        height: 120px;
+      }
+      .download-path{
+        margin-top: 46px;
+        height: auto;
+      }
+      .download-btn{
+        display: inherit;
+        width: 230px;
+        height: 68px;
+        background-repeat: no-repeat;
+      }
+      #download-ios-btn{
+        margin-top: 50px;
+        cursor: pointer;
+        background-image: url("https://s.gohitv.com/origin/cd25b003e5f944878101ba22c6c113aa1663644692081.png");
+      }
+      #download-ios-btn:hover{
+        background-image: url("https://s.gohitv.com/origin/aafee8ec98d3498d8ca9f299fa69cc941663644734434.png");
+      }
+      .qrcode {
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="header">
+        <img
+          src="https://s.gohitv.com/origin/1040fefa30244e96939b23c08e30837d1663641859444.png"
+          class="logo"
+        />
+      </div>
+      <div class="header-border"></div>
+      <div class="main-content">
+        <img
+            alt=""
+            src="https://s.gohitv.com/origin/2d840bf10440449e973950a20e9c3db81663641960182.png"
+            class="image"
+        />
+        <div class="download">
+          <img
+              alt=""
+              src="https://s.gohitv.com/origin/5955ac2b366e440a90a84b81d3c3581b1663643236165.png"
+              class="download-logo"
+          />
+          <div class="download-path">
+            <div class="download-btns">
+              <a href="" id="download-ios-btn" class="download-btn"></a>
+            </div>
+            <div class="qrcode">
+              <div id="download-qrcode"></div>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(function () {
+        var isMobile = {
+          Android: function () {
+            return navigator.userAgent.match(/Android/i) ? true : false;
+          },
+          iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i)
+              ? true
+              : false;
+          },
+          wechat: function () {
+            return navigator.userAgent.match(/MicroMessenger/i) ? true : false;
+          },
+          any: function () {
+            return isMobile.Android() || isMobile.iOS();
+          },
+        };
+        var clientWidth = document.body.getBoundingClientRect().width;
+        window.addEventListener("resize", function () {
+          clientWidth = document.body.getBoundingClientRect().width;
+          if (showH5Page()) {
+            location.href = "gotv_index_m.html";
+          }
+        });
+
+        var showH5Page = function () {
+          return isMobile.any() || clientWidth <= 600;
+        };
+
+        if (showH5Page()) {
+          location.href = "gotv_index_m.html";
+        }
+
+        var iosDownBtn = document.getElementById("download-ios-btn");
+        var iosDownLink = "";
+
+        // init
+        iosDownBtn.classList.add("download-ios-std");
+        var curLinkStd = iosDownLink;
+
+        var qrcode = new QRCode(document.getElementById("download-qrcode"), {
+          width: 156,
+          height: 156,
+        });
+
+        function makeCode() {
+          qrcode.makeCode(curLinkStd);
+        }
+
+        iosDownBtn.addEventListener("mouseover", function () {
+         curLinkStd = iosDownLink;
+         iosDownBtn.classList.add("download-ios-std");
+         makeCode();
+        });
+
+        makeCode();
+      });
+    </script>
+  </body>
+</html>
